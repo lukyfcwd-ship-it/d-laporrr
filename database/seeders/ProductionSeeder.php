@@ -21,7 +21,7 @@ class ProductionSeeder extends Seeder
         $password = env('ADMIN_PASSWORD');
 
         if (! $email || ! $password || strlen($password) < 10) {
-            $this->command->error('Isi ADMIN_EMAIL dan ADMIN_PASSWORD (minimal 10 karakter) dulu.');
+            $this->command?->error('Isi ADMIN_EMAIL dan ADMIN_PASSWORD (minimal 10 karakter) dulu.');
 
             return;
         }
@@ -47,6 +47,6 @@ class ProductionSeeder extends Seeder
             ]
         );
 
-        $this->command->info("Selesai. Admin: {$email}");
+        $this->command?->info("Selesai. Admin: {$email}");
     }
 }
