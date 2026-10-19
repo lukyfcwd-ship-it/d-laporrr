@@ -63,9 +63,11 @@
             <p class="mt-6 text-sm text-center text-slate-500">
                 Belum punya akun? <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Buat Akun</a>
             </p>
-            <p class="mt-4 text-xs text-center text-slate-400">
-                Akun demo — Admin: admin@dlaporr.sch.id · Siswa: siswa@dlaporr.sch.id (password: <span class="font-mono">password</span>)
-            </p>
+            @if (app()->isLocal())
+                <p class="mt-4 text-xs text-center text-slate-400">
+                    Akun demo (hanya tampil di komputer lokal) — Admin: admin@dlaporr.sch.id · Siswa: siswa@dlaporr.sch.id (password: <span class="font-mono">password</span>)
+                </p>
+            @endif
         </div>
     </div>
 </body>
