@@ -15,7 +15,7 @@
                 <p class="text-sm text-indigo-100 mt-1">Sistem Pengaduan Sarana Sekolah</p>
             </div>
             <div class="relative bg-white/10 rounded-xl p-4 text-sm text-indigo-50 ring-1 ring-white/15">
-                Akun yang dibuat di sini otomatis berperan sebagai <span class="text-white font-bold">Siswa</span>. Akun Admin/Petugas hanya dibuat lewat menu Data Pengguna.
+                Pendaftaran khusus <span class="text-white font-bold">siswa SMK Negeri 5 Surakarta</span>. NIS dan nama kamu akan dicocokkan dengan data resmi sekolah. Belum bisa mendaftar? Hubungi admin atau wali kelas agar datamu dimasukkan.
             </div>
             <p class="relative text-xs text-indigo-200">SMK Negeri 5 Surakarta &middot; {{ date('Y') }}</p>
         </div>
@@ -43,22 +43,18 @@
             <form method="POST" action="{{ route('register') }}" class="space-y-4">
                 @csrf
                 <div>
+                    <label for="nis" class="block text-sm font-semibold text-slate-700 mb-1">NIS</label>
+                    <input id="nis" name="nis" value="{{ old('nis') }}" required autofocus inputmode="numeric" maxlength="30" class="input-fx w-full rounded-xl border border-slate-300 px-4 py-2.5 text-base">
+                    <p class="text-xs text-slate-400 mt-1">Nomor Induk Siswa seperti pada kartu pelajar.</p>
+                </div>
+                <div>
                     <label for="name" class="block text-sm font-semibold text-slate-700 mb-1">Nama Lengkap</label>
-                    <input id="name" name="name" value="{{ old('name') }}" required autofocus class="input-fx w-full rounded-xl border border-slate-300 px-4 py-2.5 text-base">
+                    <input id="name" name="name" value="{{ old('name') }}" required maxlength="100" class="input-fx w-full rounded-xl border border-slate-300 px-4 py-2.5 text-base">
+                    <p class="text-xs text-slate-400 mt-1">Tulis sesuai data sekolah. Kelas akan terisi otomatis.</p>
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required class="input-fx w-full rounded-xl border border-slate-300 px-4 py-2.5 text-base">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label for="nis_nip" class="block text-sm font-semibold text-slate-700 mb-1">NIS</label>
-                        <input id="nis_nip" name="nis_nip" value="{{ old('nis_nip') }}" class="input-fx w-full rounded-xl border border-slate-300 px-4 py-2.5 text-base">
-                    </div>
-                    <div>
-                        <label for="kelas" class="block text-sm font-semibold text-slate-700 mb-1">Kelas</label>
-                        <input id="kelas" name="kelas" value="{{ old('kelas') }}" placeholder="XII RPL A" class="input-fx w-full rounded-xl border border-slate-300 px-4 py-2.5 text-base">
-                    </div>
                 </div>
                 <div x-data="{ show: false }">
                     <label for="password" class="block text-sm font-semibold text-slate-700 mb-1">Kata Sandi</label>

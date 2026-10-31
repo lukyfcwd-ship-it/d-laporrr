@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PengaduanController;
@@ -17,10 +18,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
     Route::post('/login', [LoginController::class, 'store']);
 
-    // Pendaftaran mandiri — SELALU membuat akun dengan role "siswa".
-    // Akun admin tidak bisa dibuat lewat sini; hanya lewat menu Data Pengguna (khusus admin).
+    // Pendaftaran mandiri — hanya untuk siswa yang NIS + namanya ada di Data Siswa (daftar resmi sekolah),
+    // dan SELALU membuat akun dengan role "siswa". Akun admin hanya dibuat lewat menu Data Pengguna.
+    // throttle: maksimal 10 percobaan per menit per alamat IP agar NIS tidak bisa ditebak-tebak.
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);
+    Route::post('/register', [RegisterController::class, 'store'])->middleware('throttle:10,1');
 });
 
 Route::middleware('auth')->group(function () {
@@ -41,6 +43,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('kategori', KategoriController::class)->except(['create', 'edit', 'show']);
         Route::resource('sarana', SaranaController::class)->except(['create', 'edit', 'show']);
         Route::resource('users', UserController::class)->except(['create', 'edit', 'show']);
+
+        // Daftar siswa resmi yang boleh membuat akun
+        Route::get('/data-siswa', [DataSiswaController::class, 'index'])->name('data-siswa.index');
+        Route::post('/data-siswa', [DataSiswaController::class, 'store'])->name('data-siswa.store');
+        Route::post('/data-siswa/import', [DataSiswaController::class, 'import'])->name('data-siswa.import');
+        Route::delete('/data-siswa/{dataSiswa}', [DataSiswaController::class, 'destroy'])->name('data-siswa.destroy');
 
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/laporan/cetak', [LaporanController::class, 'cetakSemua'])->name('laporan.cetak');

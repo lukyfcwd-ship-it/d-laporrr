@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DataSiswa;
 use App\Models\Kategori;
 use App\Models\Pengaduan;
 use App\Models\Sarana;
@@ -29,6 +30,12 @@ class DatabaseSeeder extends Seeder
             'nis_nip' => '0071234567',
             'kelas' => 'XII RPL A',
         ]);
+
+        // Daftar siswa resmi (data contoh). Akun siswa demo di atas sudah terhubung ke NIS-nya;
+        // dua siswa lain belum punya akun, jadi bisa dipakai mencoba halaman Buat Akun.
+        DataSiswa::create(['nis' => '0071234567', 'nama' => 'Andaryoko Wisnu Murti', 'kelas' => 'XII RPL A', 'user_id' => $siswa->id]);
+        DataSiswa::create(['nis' => '0071234501', 'nama' => 'Budi Santoso', 'kelas' => 'XII RPL A']);
+        DataSiswa::create(['nis' => '0071234502', 'nama' => 'Siti Aisyah', 'kelas' => 'XII RPL B']);
 
         // Kategori berdasarkan JENIS barang (bukan berdasarkan ruangan/lokasi),
         // supaya satu kategori bisa berlaku untuk barang sejenis di lokasi manapun.

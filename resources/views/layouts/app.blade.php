@@ -38,6 +38,7 @@
                 <p class="px-3 pt-5 pb-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-500">Master Data</p>
                 <a href="{{ route('kategori.index') }}" class="{{ $nav(request()->routeIs('kategori.*')) }}"><x-icon name="tag" class="w-5 h-5 shrink-0" /> Kategori Sarana</a>
                 <a href="{{ route('sarana.index') }}" class="{{ $nav(request()->routeIs('sarana.*')) }}"><x-icon name="building" class="w-5 h-5 shrink-0" /> Data Sarana</a>
+                <a href="{{ route('data-siswa.index') }}" class="{{ $nav(request()->routeIs('data-siswa.*')) }}"><x-icon name="academic" class="w-5 h-5 shrink-0" /> Data Siswa</a>
                 <a href="{{ route('users.index') }}" class="{{ $nav(request()->routeIs('users.*')) }}"><x-icon name="users" class="w-5 h-5 shrink-0" /> Data Pengguna</a>
                 <p class="px-3 pt-5 pb-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-500">Laporan</p>
                 <a href="{{ route('laporan.index') }}" class="{{ $nav(request()->routeIs('laporan.*')) }}"><x-icon name="chart" class="w-5 h-5 shrink-0" /> Rekap & Cetak PDF</a>
