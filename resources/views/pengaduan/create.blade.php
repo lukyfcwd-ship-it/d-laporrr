@@ -16,14 +16,14 @@
         <div>
             <label for="judul" class="block text-sm font-medium text-slate-700 mb-1">Judul Pengaduan</label>
             <input id="judul" name="judul" value="{{ old('judul') }}" required maxlength="150"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-base input-fx"
+                   class="w-full rounded-lg border border-[#d6cfbd] px-4 py-2.5 text-base input-fx"
                    placeholder="Contoh: Kipas angin kelas mati">
         </div>
 
         <div class="grid sm:grid-cols-2 gap-4">
             <div>
                 <label for="kategori_id" class="block text-sm font-medium text-slate-700 mb-1">Kategori Sarana (opsional)</label>
-                <select id="kategori_id" name="kategori_id" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-base input-fx">
+                <select id="kategori_id" name="kategori_id" class="w-full rounded-lg border border-[#d6cfbd] px-4 py-2.5 text-base input-fx">
                     <option value="">-- Tidak diketahui --</option>
                     @foreach ($kategoris as $kategori)
                         <option value="{{ $kategori->id }}" @selected(old('kategori_id') == $kategori->id)>{{ $kategori->nama_kategori }}</option>
@@ -34,7 +34,7 @@
             <div>
                 <label for="lokasi_kerusakan" class="block text-sm font-medium text-slate-700 mb-1">Lokasi Kerusakan</label>
                 <input id="lokasi_kerusakan" name="lokasi_kerusakan" value="{{ old('lokasi_kerusakan') }}" required maxlength="150"
-                       class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-base input-fx"
+                       class="w-full rounded-lg border border-[#d6cfbd] px-4 py-2.5 text-base input-fx"
                        placeholder="Contoh: LAB RPL">
             </div>
         </div>
@@ -42,12 +42,12 @@
         <div>
             <label for="tanggal_kejadian" class="block text-sm font-medium text-slate-700 mb-1">Tanggal Kejadian</label>
             <input id="tanggal_kejadian" type="date" name="tanggal_kejadian" value="{{ old('tanggal_kejadian', date('Y-m-d')) }}" required max="{{ date('Y-m-d') }}"
-                   class="w-full sm:w-1/2 rounded-lg border border-slate-300 px-4 py-2.5 text-base input-fx">
+                   class="w-full sm:w-1/2 rounded-lg border border-[#d6cfbd] px-4 py-2.5 text-base input-fx">
         </div>
 
         <div>
             <label for="prioritas" class="block text-sm font-medium text-slate-700 mb-1">Tingkat Prioritas</label>
-            <select id="prioritas" name="prioritas" required class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-base input-fx">
+            <select id="prioritas" name="prioritas" required class="w-full rounded-lg border border-[#d6cfbd] px-4 py-2.5 text-base input-fx">
                 <option value="rendah" @selected(old('prioritas') == 'rendah')>Rendah</option>
                 <option value="sedang" @selected(old('prioritas', 'sedang') == 'sedang')>Sedang</option>
                 <option value="tinggi" @selected(old('prioritas') == 'tinggi')>Tinggi (mengganggu aktivitas)</option>
@@ -57,19 +57,19 @@
         <div>
             <label for="deskripsi" class="block text-sm font-medium text-slate-700 mb-1">Deskripsi Kerusakan</label>
             <textarea id="deskripsi" name="deskripsi" rows="4" required minlength="10"
-                      class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-base input-fx"
+                      class="w-full rounded-lg border border-[#d6cfbd] px-4 py-2.5 text-base input-fx"
                       placeholder="Jelaskan kondisi kerusakan secara rinci...">{{ old('deskripsi') }}</textarea>
         </div>
 
         <div>
             <label for="bukti_foto" class="block text-sm font-medium text-slate-700 mb-1">Bukti Foto (opsional, maks 2MB)</label>
             <input id="bukti_foto" type="file" name="bukti_foto" accept="image/*"
-                   class="w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:font-medium hover:file:bg-blue-100">
+                   class="w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-800 file:font-medium hover:file:bg-brand-100">
         </div>
 
         <div class="flex gap-3 pt-2">
             <button type="submit" class="btn-primary px-5 py-2.5 rounded-lg">Kirim Pengaduan</button>
-            <a href="{{ route('pengaduan.index') }}" class="px-5 py-2.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50">Batal</a>
+            <a href="{{ route('pengaduan.index') }}" class="px-5 py-2.5 rounded-lg border border-[#d6cfbd] text-slate-700 hover:bg-slate-50">Batal</a>
         </div>
     </form>
 </div>

@@ -63,10 +63,10 @@ class Pengaduan extends Model
     {
         return match ($status) {
             'pending' => 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200',
-            'diproses' => 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-200',
+            'diproses' => 'bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-200',
             'approved' => 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200',
             'rejected' => 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-200',
-            'selesai' => 'bg-indigo-50 text-indigo-700 ring-1 ring-inset ring-indigo-200',
+            'selesai' => 'bg-violet-50 text-violet-700 ring-1 ring-inset ring-violet-200',
             default => 'bg-slate-100 text-slate-600 ring-1 ring-inset ring-slate-200',
         };
     }

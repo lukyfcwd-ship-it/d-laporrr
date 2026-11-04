@@ -8,7 +8,6 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SaranaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +22,7 @@ Route::middleware('guest')->group(function () {
     // throttle: maksimal 10 percobaan per menit per alamat IP agar NIS tidak bisa ditebak-tebak.
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
     Route::post('/register', [RegisterController::class, 'store'])->middleware('throttle:10,1');
+    Route::post('/register/cek', [RegisterController::class, 'cek'])->name('register.cek')->middleware('throttle:20,1');
 });
 
 Route::middleware('auth')->group(function () {
@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo');
+    Route::delete('/profile/photo', [ProfileController::class, 'destroyPhoto'])->name('profile.photo.destroy');
 
     // Fitur Transaksi Utama - Siswa & Admin (lihat sesuai kepemilikan di controller)
     Route::resource('pengaduan', PengaduanController::class)->only(['index', 'create', 'store', 'show']);
@@ -41,7 +43,6 @@ Route::middleware('auth')->group(function () {
     // Admin only: Master Data & Laporan
     Route::middleware('role:admin')->group(function () {
         Route::resource('kategori', KategoriController::class)->except(['create', 'edit', 'show']);
-        Route::resource('sarana', SaranaController::class)->except(['create', 'edit', 'show']);
         Route::resource('users', UserController::class)->except(['create', 'edit', 'show']);
 
         // Daftar siswa resmi yang boleh membuat akun

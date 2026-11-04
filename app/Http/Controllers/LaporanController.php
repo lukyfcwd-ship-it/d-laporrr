@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengaduan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
@@ -29,6 +30,11 @@ class LaporanController extends Controller
 
     public function cetakSatu(Pengaduan $pengaduan)
     {
+        // Siswa hanya boleh mencetak tiket miliknya sendiri; admin boleh mencetak semua.
+        if (Auth::user()->isSiswa() && $pengaduan->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $pengaduan->load(['user', 'sarana.kategori', 'kategori', 'verifikator']);
 
         $pdf = Pdf::loadView('laporan.pdf-detail', compact('pengaduan'))->setPaper('a4', 'portrait');

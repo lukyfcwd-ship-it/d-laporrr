@@ -12,7 +12,7 @@
 
     <!-- Penjelasan fungsi halaman -->
     <div class="card p-5 mb-4 flex items-start gap-3">
-        <span class="ico ico-violet w-10 h-10 rounded-xl shrink-0"><x-icon name="users" class="w-5 h-5" /></span>
+        <span class="ico ico-ink w-10 h-10 rounded-xl shrink-0"><x-icon name="users" class="w-5 h-5" /></span>
         <p class="text-sm text-slate-600">
             Daftar ini adalah <span class="font-semibold text-slate-900">data siswa resmi SMK Negeri 5 Surakarta</span>.
             Hanya siswa yang <span class="font-semibold">NIS dan namanya</span> ada di sini yang bisa membuat akun lewat halaman <span class="font-mono text-xs">Buat Akun</span>.
@@ -33,12 +33,12 @@
         <p class="text-xs text-slate-500 mt-0.5 mb-3">
             Kolom: <span class="font-mono">nis, nama, kelas</span> (pemisah koma atau titik koma, baris judul boleh ada).
             NIS yang sudah ada dan belum punya akun akan diperbarui; yang sudah punya akun dilewati.
-            <a href="{{ asset('contoh-data-siswa.csv') }}" download class="text-indigo-600 hover:text-indigo-800 font-medium transition-colors">Unduh contoh file</a>
+            <a href="{{ asset('contoh-data-siswa.csv') }}" download class="text-brand-600 hover:text-brand-800 font-medium transition-colors">Unduh contoh file</a>
         </p>
         <form method="POST" action="{{ route('data-siswa.import') }}" enctype="multipart/form-data" class="flex flex-col sm:flex-row gap-3 sm:items-center">
             @csrf
             <input type="file" name="file" accept=".csv,.txt" required
-                   class="flex-1 text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700 file:font-medium hover:file:bg-indigo-100">
+                   class="flex-1 text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-medium hover:file:bg-brand-100">
             <button type="submit" class="btn-primary px-4 py-2 rounded-lg text-sm inline-flex items-center justify-center gap-1.5">Impor Data</button>
         </form>
     </div>
@@ -46,13 +46,13 @@
     <!-- Pencarian, filter, tambah -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <form method="GET" class="flex flex-wrap gap-2 flex-1">
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari NIS, nama, atau kelas..." class="flex-1 min-w-[160px] rounded-xl border border-slate-300 px-3 py-2 text-sm input-fx">
-            <select name="status" class="rounded-xl border border-slate-300 px-3 py-2 text-sm input-fx">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari NIS, nama, atau kelas..." class="flex-1 min-w-[160px] rounded-xl border border-[#d6cfbd] px-3 py-2 text-sm input-fx">
+            <select name="status" class="rounded-xl border border-[#d6cfbd] px-3 py-2 text-sm input-fx">
                 <option value="">Semua status</option>
                 <option value="terdaftar" @selected(request('status') === 'terdaftar')>Sudah punya akun</option>
                 <option value="belum" @selected(request('status') === 'belum')>Belum punya akun</option>
             </select>
-            <button type="submit" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 text-white text-sm font-medium transition">Filter</button>
+            <button type="submit" class="px-4 py-2 rounded-xl bg-brand-900 hover:bg-brand-800 active:scale-95 text-white text-sm font-medium transition">Filter</button>
         </form>
         <button @click="showAdd = true" type="button" class="btn-primary px-4 py-2 rounded-lg text-sm inline-flex items-center gap-1.5"><x-icon name="plus" class="w-4 h-4" /> Tambah Siswa</button>
     </div>
@@ -60,7 +60,7 @@
     <div class="card overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
-                <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
+                <thead class="bg-[#faf7ef] text-slate-500 text-xs uppercase tracking-wide">
                     <tr>
                         <th class="text-left px-5 py-3 font-semibold">NIS</th>
                         <th class="text-left px-5 py-3 font-semibold">Nama</th>
@@ -69,9 +69,9 @@
                         <th class="text-right px-5 py-3 font-semibold">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-[#efe9da]">
                     @forelse ($siswas as $s)
-                        <tr class="hover:bg-indigo-50/50 transition-colors">
+                        <tr class="hover:bg-sun-300/15 transition-colors">
                             <td class="px-5 py-3.5 font-mono text-xs">{{ $s->nis }}</td>
                             <td class="px-5 py-3.5 font-medium">{{ $s->nama }}</td>
                             <td class="px-5 py-3.5">{{ $s->kelas }}</td>
@@ -99,7 +99,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-5 py-3.5 border-t border-slate-200">{{ $siswas->links() }}</div>
+        <div class="px-5 py-3.5 border-t border-[#e6dfcf]">{{ $siswas->links() }}</div>
     </div>
 
     <!-- Modal tambah siswa -->
@@ -108,12 +108,12 @@
             <h3 class="font-bold text-slate-900 mb-4">Tambah Data Siswa</h3>
             <form method="POST" action="{{ route('data-siswa.store') }}" class="space-y-3">
                 @csrf
-                <input name="nis" placeholder="NIS" required maxlength="30" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm input-fx">
-                <input name="nama" placeholder="Nama lengkap (sesuai data sekolah)" required maxlength="100" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm input-fx">
-                <input name="kelas" placeholder="Kelas, contoh: XII RPL A" required maxlength="30" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm input-fx">
+                <input name="nis" placeholder="NIS" required maxlength="30" class="w-full rounded-xl border border-[#d6cfbd] px-3 py-2 text-sm input-fx">
+                <input name="nama" placeholder="Nama lengkap (sesuai data sekolah)" required maxlength="100" class="w-full rounded-xl border border-[#d6cfbd] px-3 py-2 text-sm input-fx">
+                <input name="kelas" placeholder="Kelas, contoh: XII RPL A" required maxlength="30" class="w-full rounded-xl border border-[#d6cfbd] px-3 py-2 text-sm input-fx">
                 <div class="flex gap-2 pt-2">
                     <button type="submit" class="flex-1 btn-primary py-2 rounded-lg text-sm">Simpan</button>
-                    <button type="button" @click="showAdd = false" class="flex-1 border border-slate-300 text-slate-600 hover:bg-indigo-50/50 transition-colors py-2 rounded-lg text-sm">Batal</button>
+                    <button type="button" @click="showAdd = false" class="flex-1 border border-[#d6cfbd] text-slate-600 hover:bg-sun-300/15 transition-colors py-2 rounded-lg text-sm">Batal</button>
                 </div>
             </form>
         </div>

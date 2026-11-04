@@ -37,6 +37,12 @@ class User extends Authenticatable
         return $this->role === 'siswa';
     }
 
+    /** Alamat foto profil (null bila belum punya foto). */
+    public function fotoUrl(): ?string
+    {
+        return $this->foto_profil ? asset('storage/'.$this->foto_profil) : null;
+    }
+
     public function pengaduans()
     {
         return $this->hasMany(Pengaduan::class);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengaduan;
-use App\Models\Sarana;
+use App\Models\DataSiswa;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +21,7 @@ class DashboardController extends Controller
                 'approved' => Pengaduan::status('approved')->count(),
                 'rejected' => Pengaduan::status('rejected')->count(),
                 'selesai' => Pengaduan::status('selesai')->count(),
-                'total_sarana' => Sarana::count(),
+                'siswa_belum_akun' => DataSiswa::whereNull('user_id')->count(),
                 'total_siswa' => User::where('role', 'siswa')->count(),
             ];
 

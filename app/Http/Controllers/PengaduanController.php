@@ -21,8 +21,9 @@ class PengaduanController extends Controller
 
         $pengaduans = $query
             ->when($request->status, fn ($q) => $q->where('status', $request->status))
-            ->when($request->q, fn ($q) => $q->where('judul', 'like', "%{$request->q}%")
-                ->orWhere('kode_tiket', 'like', "%{$request->q}%"))
+            ->when($request->q, fn ($q) => $q->where(fn ($w) => $w
+                ->where('judul', 'like', "%{$request->q}%")
+                ->orWhere('kode_tiket', 'like', "%{$request->q}%")))
             ->latest()
             ->paginate(10)
             ->withQueryString();

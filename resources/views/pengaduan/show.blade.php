@@ -9,14 +9,14 @@
             <p class="text-sm text-slate-500 font-mono">{{ $pengaduan->kode_tiket }}</p>
             <button type="button"
                     @click="navigator.clipboard.writeText('{{ $pengaduan->kode_tiket }}'); copied = true; setTimeout(() => copied = false, 1500)"
-                    class="copy-btn p-1 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-indigo-50"
+                    class="copy-btn p-1 rounded-md text-slate-400 hover:text-brand-600 hover:bg-sun-300/20"
                     :aria-label="copied ? 'Tersalin' : 'Salin kode tiket'">
                 <span x-show="!copied"><x-icon name="copy" class="w-4 h-4" /></span>
                 <span x-show="copied" x-cloak class="copy-check text-emerald-500"><x-icon name="check" class="w-4 h-4" /></span>
             </button>
         </div>
     </div>
-    <a href="{{ route('pengaduan.cetak', $pengaduan) }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50">
+    <a href="{{ route('pengaduan.cetak', $pengaduan) }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-[#d6cfbd] text-sm font-medium hover:bg-slate-50">
         <x-icon name="printer" class="w-4 h-4" /> Cetak PDF
     </a>
 </div>
@@ -32,7 +32,7 @@
             <li class="flex items-start {{ $i < count($steps) - 1 ? 'flex-1' : '' }}">
                 <div class="flex flex-col items-center w-14 sm:w-20">
                     <span class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all
-                        {{ $i < $cur ? 'bg-indigo-600 text-white' : ($i === $cur ? (($rej && $i === 2) ? 'bg-red-500 text-white' : 'bg-indigo-600 text-white') . ' pulse-ring' : 'bg-slate-100 text-slate-400') }}">
+                        {{ $i < $cur ? 'bg-brand-600 text-white' : ($i === $cur ? (($rej && $i === 2) ? 'bg-red-500 text-white' : 'bg-brand-600 text-white') . ' pulse-ring' : 'bg-slate-100 text-slate-400') }}">
                         @if ($i < $cur) <x-icon name="check" class="w-5 h-5" /> @else {{ $i + 1 }} @endif
                     </span>
                     <span class="mt-2 text-[11px] sm:text-xs font-semibold text-center {{ $i <= $cur ? 'text-slate-800' : 'text-slate-400' }}">
@@ -41,7 +41,7 @@
                 </div>
                 @if ($i < count($steps) - 1)
                     <div class="flex-1 h-1 mt-[18px] rounded-full bg-slate-100 overflow-hidden">
-                        <div class="bar h-full rounded-full bg-indigo-500" style="--w: {{ $i < $cur ? 100 : 0 }}%; animation-delay: {{ 0.3 + $i * 0.25 }}s"></div>
+                        <div class="bar h-full rounded-full bg-brand-500" style="--w: {{ $i < $cur ? 100 : 0 }}%; animation-delay: {{ 0.3 + $i * 0.25 }}s"></div>
                     </div>
                 @endif
             </li>
@@ -73,7 +73,7 @@
         @if ($pengaduan->bukti_foto)
             <div>
                 <dt class="text-slate-500 text-sm mb-1">Bukti Foto</dt>
-                <img src="{{ Storage::url($pengaduan->bukti_foto) }}" alt="Bukti foto kerusakan {{ $pengaduan->judul }}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2394a3b8%27 stroke-width=%271.5%27%3E%3Crect x=%272%27 y=%273%27 width=%2720%27 height=%2718%27 rx=%272%27 fill=%27%23f1f5f9%27 stroke=%27%23e2e8f0%27/%3E%3Ccircle cx=%278.5%27 cy=%278.5%27 r=%271.5%27/%3E%3Cpath d=%27m21 15-5-5L5 21%27/%3E%3C/svg%3E'" class="rounded-lg border border-slate-200 max-w-sm w-full">
+                <img src="{{ asset('storage/'.$pengaduan->bukti_foto) }}" alt="Bukti foto kerusakan {{ $pengaduan->judul }}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2394a3b8%27 stroke-width=%271.5%27%3E%3Crect x=%272%27 y=%273%27 width=%2720%27 height=%2718%27 rx=%272%27 fill=%27%23f1f5f9%27 stroke=%27%23e2e8f0%27/%3E%3Ccircle cx=%278.5%27 cy=%278.5%27 r=%271.5%27/%3E%3Cpath d=%27m21 15-5-5L5 21%27/%3E%3C/svg%3E'" class="rounded-lg border border-[#e6dfcf] max-w-sm w-full">
             </div>
         @endif
 
@@ -96,7 +96,7 @@
                 @method('PUT')
                 <div>
                     <label for="status" class="block text-sm font-medium text-slate-700 mb-1">Ubah Status</label>
-                    <select id="status" name="status" required class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm input-fx input-fx">
+                    <select id="status" name="status" required class="w-full rounded-xl border border-[#d6cfbd] px-3 py-2 text-sm input-fx input-fx">
                         <option value="diproses" @selected($pengaduan->status == 'diproses')>Diproses</option>
                         <option value="approved" @selected($pengaduan->status == 'approved')>Disetujui</option>
                         <option value="rejected" @selected($pengaduan->status == 'rejected')>Ditolak</option>
@@ -105,7 +105,7 @@
                 </div>
                 <div>
                     <label for="catatan_admin" class="block text-sm font-medium text-slate-700 mb-1">Catatan / Tanggapan</label>
-                    <textarea id="catatan_admin" name="catatan_admin" rows="3" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm input-fx input-fx">{{ $pengaduan->catatan_admin }}</textarea>
+                    <textarea id="catatan_admin" name="catatan_admin" rows="3" class="w-full rounded-xl border border-[#d6cfbd] px-3 py-2 text-sm input-fx input-fx">{{ $pengaduan->catatan_admin }}</textarea>
                 </div>
                 <button type="submit" class="w-full btn-primary py-2.5 rounded-lg text-sm">Simpan Perubahan</button>
             </form>

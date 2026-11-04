@@ -8,15 +8,15 @@
 
     $segs = [
         ['Menunggu',  $stats['pending'],  '#f59e0b'],
-        ['Diproses',  $stats['diproses'], '#3b82f6'],
+        ['Diproses',  $stats['diproses'], '#0ea5e9'],
         ['Disetujui', $stats['approved'], '#10b981'],
-        ['Selesai',   $stats['selesai'],  '#6366f1'],
+        ['Selesai',   $stats['selesai'],  '#8b5cf6'],
         ['Ditolak',   $stats['rejected'], '#ef4444'],
     ];
     $sum = array_sum(array_column($segs, 1));
     $offset = 0;
     $maxKat = max($per_kategori->max('jumlah') ?? 1, 1);
-    $barColors = ['bg-indigo-500', 'bg-blue-500', 'bg-cyan-500', 'bg-emerald-500', 'bg-amber-500'];
+    $barColors = ['bg-brand-900', 'bg-sun-500', 'bg-sky-500', 'bg-emerald-500', 'bg-rose-400'];
 @endphp
 
 <!-- Hero -->
@@ -26,18 +26,18 @@
     <div class="absolute inset-0 noise-grid opacity-30"></div>
     <div class="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-            <p class="text-indigo-100 text-sm font-medium">Selamat {{ $salam }},</p>
+            <p class="text-brand-100 text-sm font-medium">Selamat {{ $salam }},</p>
             <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mt-0.5">{{ auth()->user()->name }}</h2>
-            <p class="text-indigo-100/90 mt-2 max-w-md text-sm md:text-base">
+            <p class="text-brand-100/90 mt-2 max-w-md text-sm md:text-base">
                 @if ($stats['pending'] > 0)
-                    Ada <span class="font-extrabold text-white">{{ $stats['pending'] }} pengaduan</span> yang menunggu verifikasi kamu hari ini.
+                    Ada <span class="font-extrabold text-white marker">{{ $stats['pending'] }} pengaduan</span> yang menunggu verifikasi kamu hari ini.
                 @else
                     Semua pengaduan sudah tertangani. Kerja bagus!
                 @endif
             </p>
         </div>
         <div class="flex flex-wrap gap-3">
-            <a href="{{ route('pengaduan.index', ['status' => 'pending']) }}" class="btn-white inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm">
+            <a href="{{ route('pengaduan.index', ['status' => 'pending']) }}" class="btn-sun inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm">
                 Tinjau Sekarang <x-icon name="arrow-right" class="w-4 h-4" />
             </a>
             <a href="{{ route('laporan.index') }}" class="btn-glass inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold">
@@ -50,9 +50,9 @@
 <!-- Stat cards -->
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
     @foreach ([
-        ['Total Pengaduan', $stats['total'],    'ico-blue',   'clipboard', 'text-slate-900'],
+        ['Total Pengaduan', $stats['total'],    'ico-ink',    'clipboard', 'text-slate-900'],
         ['Menunggu',        $stats['pending'],  'ico-amber',  'clock',     'text-amber-600'],
-        ['Diproses',        $stats['diproses'], 'ico-violet', 'chart',     'text-indigo-600'],
+        ['Diproses',        $stats['diproses'], 'ico-ink', 'chart',     'text-brand-600'],
         ['Selesai',         $stats['selesai'],  'ico-green',  'check',     'text-emerald-600'],
     ] as $i => [$label, $val, $ico, $icon, $txt])
         <div class="card card-hover reveal p-5" style="--d: {{ 0.08 * $i + 0.1 }}s">
@@ -129,16 +129,16 @@
 
     <div class="card reveal p-5 md:p-6" style="--d:.4s">
         <h3 class="font-extrabold text-slate-900">Ringkasan</h3>
-        <p class="text-xs text-slate-500 mb-4">Data master sistem</p>
+        <p class="text-xs text-slate-500 mb-4">Pendaftaran dan penolakan</p>
         <ul class="space-y-3">
-            <li class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-indigo-50 transition-colors">
-                <span class="ico ico-slate w-10 h-10 rounded-xl"><x-icon name="building" class="w-5 h-5" /></span>
-                <div class="flex-1"><p class="text-xs text-slate-500 font-medium">Sarana terdaftar</p></div>
-                <span class="text-xl font-extrabold text-slate-900" data-count="{{ $stats['total_sarana'] }}">{{ $stats['total_sarana'] }}</span>
+            <li class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-sun-300/20 transition-colors">
+                <span class="ico ico-amber w-10 h-10 rounded-xl"><x-icon name="academic" class="w-5 h-5" /></span>
+                <div class="flex-1"><p class="text-xs text-slate-500 font-medium">Siswa belum punya akun</p></div>
+                <span class="text-xl font-extrabold text-slate-900" data-count="{{ $stats['siswa_belum_akun'] }}">{{ $stats['siswa_belum_akun'] }}</span>
             </li>
-            <li class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-indigo-50 transition-colors">
-                <span class="ico ico-blue w-10 h-10 rounded-xl"><x-icon name="users" class="w-5 h-5" /></span>
-                <div class="flex-1"><p class="text-xs text-slate-500 font-medium">Siswa terdaftar</p></div>
+            <li class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-sun-300/20 transition-colors">
+                <span class="ico ico-ink w-10 h-10 rounded-xl"><x-icon name="users" class="w-5 h-5" /></span>
+                <div class="flex-1"><p class="text-xs text-slate-500 font-medium">Siswa punya akun</p></div>
                 <span class="text-xl font-extrabold text-slate-900" data-count="{{ $stats['total_siswa'] }}">{{ $stats['total_siswa'] }}</span>
             </li>
             <li class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-red-50 transition-colors">
@@ -171,20 +171,20 @@
             <h3 class="font-bold text-slate-900">Tren Pengaduan Masuk</h3>
             <p class="text-xs text-slate-500">7 hari terakhir</p>
         </div>
-        <span class="ico ico-violet w-10 h-10 rounded-xl shrink-0"><x-icon name="chart" class="w-5 h-5" /></span>
+        <span class="ico ico-ink w-10 h-10 rounded-xl shrink-0"><x-icon name="chart" class="w-5 h-5" /></span>
     </div>
     <svg viewBox="0 0 {{ $w }} {{ $h }}" class="w-full h-32 mt-2" role="img" aria-label="Grafik tren pengaduan 7 hari terakhir">
         <defs>
             <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#4f46e5" stop-opacity=".18"/>
-                <stop offset="100%" stop-color="#4f46e5" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#FFC933" stop-opacity=".55"/>
+                <stop offset="100%" stop-color="#FFC933" stop-opacity="0"/>
             </linearGradient>
         </defs>
         <path d="{{ $areaPath }}" fill="url(#areaFill)" stroke="none"/>
-        <path d="{{ $linePath }}" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+        <path d="{{ $linePath }}" fill="none" stroke="#0E1B3D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
               class="draw-line" style="--len: 1400"/>
         @foreach ($tPts as $p)
-            <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="4" fill="#fff" stroke="#4f46e5" stroke-width="2"/>
+            <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="4" fill="#fff" stroke="#0E1B3D" stroke-width="2"/>
         @endforeach
     </svg>
     <div class="flex justify-between text-[11px] text-slate-400 font-medium px-0.5">
@@ -194,15 +194,15 @@
 
 <!-- Recent table -->
 <div class="card reveal overflow-hidden" style="--d:.45s">
-    <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+    <div class="px-5 py-4 border-b border-[#efe9da] flex items-center justify-between">
         <h2 class="font-extrabold text-slate-900">Pengaduan Terbaru</h2>
-        <a href="{{ route('pengaduan.index') }}" class="group inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 font-semibold transition-colors">
+        <a href="{{ route('pengaduan.index') }}" class="group inline-flex items-center gap-1 text-sm text-brand-600 hover:text-brand-800 font-semibold transition-colors">
             Lihat semua <x-icon name="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </a>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
-            <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
+            <thead class="bg-[#faf7ef] text-slate-500 text-xs uppercase tracking-wide">
                 <tr>
                     <th class="text-left px-5 py-3 font-semibold">Tiket</th>
                     <th class="text-left px-5 py-3 font-semibold">Judul</th>
@@ -210,10 +210,10 @@
                     <th class="text-left px-5 py-3 font-semibold">Status</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-[#efe9da]">
                 @forelse ($terbaru as $item)
-                    <tr class="hover:bg-indigo-50/50 transition-colors">
-                        <td class="px-5 py-3.5"><a href="{{ route('pengaduan.show', $item) }}" class="text-indigo-600 hover:text-indigo-800 font-semibold transition-colors">{{ $item->kode_tiket }}</a></td>
+                    <tr class="hover:bg-sun-300/15 transition-colors">
+                        <td class="px-5 py-3.5"><a href="{{ route('pengaduan.show', $item) }}" class="text-brand-600 hover:text-brand-800 font-semibold transition-colors">{{ $item->kode_tiket }}</a></td>
                         <td class="px-5 py-3.5 font-medium">{{ $item->judul }}</td>
                         <td class="px-5 py-3.5 text-slate-500">{{ $item->user->name }}</td>
                         <td class="px-5 py-3.5">
