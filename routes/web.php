@@ -10,12 +10,14 @@ use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', fn () => redirect()->route('login'));
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
-    Route::post('/login', [LoginController::class, 'store']);
+    // throttle: maksimal 10 percobaan per menit per alamat IP agar kata sandi tidak bisa ditebak dengan program.
+    Route::post('/login', [LoginController::class, 'store'])->middleware('throttle:10,1');
 
     // Pendaftaran mandiri — hanya untuk siswa yang NIS + namanya ada di Data Siswa (daftar resmi sekolah),
     // dan SELALU membuat akun dengan role "siswa". Akun admin hanya dibuat lewat menu Data Pengguna.
@@ -29,6 +31,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Menyajikan foto bukti & foto profil langsung dari penyimpanan, khusus pengguna yang sudah login.
+    // Dipakai di hosting yang tidak bisa menjalankan `php artisan storage:link`.
+    Route::get('/storage/{folder}/{file}', function (string $folder, string $file) {
+        $path = "{$folder}/{$file}";
+        abort_unless(Storage::disk('public')->exists($path), 404);
+
+        return Storage::disk('public')->response($path);
+    })->where(['folder' => 'bukti-pengaduan|foto-profil', 'file' => '[A-Za-z0-9._-]+'])->name('storage.file');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
